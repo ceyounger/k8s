@@ -44,15 +44,15 @@ spec:
               memory: "268435456"
           volumeMounts:
             - mountPath: /config
-              name: jackett-longhorn-volume
+              name: jackett-volume
             - mountPath: /data/nzb
               name: jackett-nfs-nzb
             - mountPath: /data/torrent
               name: jackett-nfs-torrent
       volumes:
-        - name: jackett-longhorn-volume
+        - name: jackett-volume
           persistentVolumeClaim:
-            claimName: jackett-longhorn-pvc
+            claimName: jackett-pvc
         - name: jackett-nfs-nzb
           nfs:
             server: 192.168.52.8
