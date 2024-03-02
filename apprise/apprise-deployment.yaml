@@ -45,10 +45,10 @@ spec:
               cpu: 250m
               memory: "134217728"
           volumeMounts:
-            -  name: apprise-longhorn-volume
+            -  name: apprise-volume
                mountPath: /config
       volumes:
-        - name: apprise-longhorn-volume
+        - name: apprise-volume
           persistentVolumeClaim:
-            claimName: apprise-longhorn-pvc
+            claimName: apprise-pvc
       restartPolicy: Always
