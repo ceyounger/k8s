@@ -1,2 +1,2 @@
-# k3s
-k3s Projects
+# k8s
+k8s Projects
