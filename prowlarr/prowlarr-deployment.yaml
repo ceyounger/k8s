@@ -20,6 +20,8 @@ spec:
     metadata:
       labels:
         app: prowlarr
+      annotations:	
+        linkerd.io/inject: enabled        
     spec:
       containers:
         - name: prowlarr
