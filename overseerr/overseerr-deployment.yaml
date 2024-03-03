@@ -20,6 +20,8 @@ spec:
     metadata:
       labels:
         app: overseerr
+      annotations:	
+        linkerd.io/inject: enabled        
     spec:
       containers:
         - name: overseerr
