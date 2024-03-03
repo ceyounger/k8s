@@ -45,11 +45,11 @@ spec:
               cpu: 250m
               memory: "134217728"
           volumeMounts:
-            -  name: uptime-kuma-longhorn-volume
+            -  name: uptime-kuma-volume
                mountPath: /app/data
       volumes:
-        - name: uptime-kuma-longhorn-volume
+        - name: uptime-kuma-volume
           persistentVolumeClaim:
-            claimName: uptime-kuma-longhorn-pvc
+            claimName: uptime-kuma-pvc
       restartPolicy: Always
 
