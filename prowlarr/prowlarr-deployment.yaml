@@ -46,15 +46,15 @@ spec:
               memory: "268435456"
           volumeMounts:
             - mountPath: /config
-              name: prowlarr-longhorn-volume
+              name: prowlarr-volume
             - mountPath: /data/nzb
               name: prowlarr-nfs-nzb
             - mountPath: /data/torrent
               name: prowlarr-nfs-torrent          
       volumes:
-        - name: prowlarr-longhorn-volume
+        - name: prowlarr-volume
           persistentVolumeClaim:
-            claimName: prowlarr-longhorn-pvc
+            claimName: prowlarr-pvc
         - name: prowlarr-nfs-nzb
           nfs:
             server: 192.168.52.8
