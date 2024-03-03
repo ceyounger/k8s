@@ -44,15 +44,15 @@ spec:
               memory: "268435456"
           volumeMounts:
             - mountPath: /config
-              name: nzbhydra-longhorn-volume
+              name: nzbhydra-volume
             - mountPath: /data/nzb
               name: nzbhydra-nfs-nzb
             - mountPath: /data/torrent
               name: nzbhydra-nfs-torrent
       volumes:
-        - name: nzbhydra-longhorn-volume
+        - name: nzbhydra-volume
           persistentVolumeClaim:
-            claimName: nzbhydra-longhorn-pvc
+            claimName: nzbhydra-pvc
         - name: nzbhydra-nfs-nzb
           nfs:
             server: 192.168.52.8
