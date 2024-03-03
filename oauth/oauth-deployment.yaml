@@ -20,6 +20,8 @@ spec:
     metadata:
       labels:
         app: oauth
+      annotations:	
+        linkerd.io/inject: enabled        
     spec:
       terminationGracePeriodSeconds: 60    
       containers:
