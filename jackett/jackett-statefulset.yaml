@@ -62,13 +62,13 @@ spec:
           server: 192.168.52.8
           path: /volume1/media/Holding/docker/torrent
           readOnly: false
-    volumeClaimTemplates:
-    - metadata:
-        name: jackett-pvc
-        namespace: media-services
-      spec:
-        accessModes: [ "ReadWriteOnce" ]
-        storageClassName: "do-block-storage"
-        resources:
-          requests:
-            storage: 2Gi
+  volumeClaimTemplates:
+  - metadata:
+      name: jackett-pvc
+      namespace: media-services
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "do-block-storage"
+      resources:
+        requests:
+          storage: 2Gi
