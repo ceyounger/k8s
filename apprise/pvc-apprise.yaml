@@ -10,16 +10,3 @@ spec:
   resources:
     requests:
       storage: 2Gi
-
-apiVersion: v1
-kind: PersistentVolumeClaim
-metadata:
-  name: apprise-attach-pvc
-  namespace: general-services
-spec:
-  accessModes:
-    - ReadWriteOnce
-  storageClassName: do-block-storage
-  resources:
-    requests:
-      storage: 2Gi
