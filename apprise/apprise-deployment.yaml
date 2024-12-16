@@ -49,10 +49,15 @@ spec:
               cpu: 250m
               memory: "134217728"
           volumeMounts:
-            -  name: apprise-volume
-               mountPath: /config
+            - name: apprise-volume
+                mountPath: /config
+            - name: apprise-attach-volume
+                mountPath: /attachments
       volumes:
         - name: apprise-volume
           persistentVolumeClaim:
             claimName: apprise-pvc
+        - name: apprise-attach-volume
+          persistentVolumeClaim:
+            claimName: apprise-attach-pvc
       restartPolicy: Always
