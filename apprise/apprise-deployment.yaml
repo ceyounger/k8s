@@ -36,6 +36,8 @@ spec:
               value: '1000'
             - name: UMASK
               value: '002'
+            - name: APPRISE_ATTACH_SIZE
+              value: 100
           ports:
             - name: apprise-api
               containerPort: 8000
