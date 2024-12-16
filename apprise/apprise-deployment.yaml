@@ -50,9 +50,9 @@ spec:
               memory: "134217728"
           volumeMounts:
             - name: apprise-volume
-                mountPath: /config
+              mountPath: /config
             - name: apprise-attach-volume
-                mountPath: /attachments
+              mountPath: /attachments
       volumes:
         - name: apprise-volume
           persistentVolumeClaim:
