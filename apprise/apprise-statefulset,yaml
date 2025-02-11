@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: apprise-api
+  namespace: general-services
+  labels:
+    app.kubernetes.io/name: apprise-api
+  annotations:
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@weekly"    
+spec:
+  selector:
+    matchLabels:
+      app: apprise-api
+  serviceName: "apprise"
+  replicas: 1
+  minReadySeconds: 1
+  template:
+    metadata:
+      labels:
+        app: apprise-api
+      annotations:	
+        linkerd.io/inject: enabled        
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: apprise-api
+        image: lscr.io/linuxserver/apprise-api:latest
+        ports:
+        - name: apprise-api
+          containerPort: 8000
+        env:
+          - name: TZ
+            value: America/Los_Angeles
+          - name: PUID
+            value: '1000'
+          - name: PGID
+            value: '1000'              
+        resources:
+          limits:
+            cpu: 500m
+            memory: "536870912"
+          requests:
+            cpu: 250m
+            memory: "268435456"
+        volumeMounts:
+          - name: apprise-pvc
+            mountPath: /config
+          - name: apprise-attach-pvc
+            mountPath: /attachments
+
+  volumeClaimTemplates:
+  - metadata:
+      name: apprise-pvc
+      namespace: general-services
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "do-block-storage"
+      resources:
+        requests:
+          storage: 2Gi
+  - metadata:
+      name: apprise-attach-pvc
+      namespace: general-services
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "do-block-storage"
+      resources:
+        requests:
+          storage: 2Gi
