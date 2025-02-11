@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: uptime-kuma
+  namespace: monitoring
+  labels:
+    app.kubernetes.io/name: uptime-kuma
+  annotations:
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@weekly"    
+spec:
+  selector:
+    matchLabels:
+      app: uptime-kuma
+  serviceName: "uptime-kuma"
+  replicas: 1
+  minReadySeconds: 1
+  template:
+    metadata:
+      labels:
+        app: uptime-kuma
+      annotations:	
+        linkerd.io/inject: enabled        
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: uptime-kuma
+        image: louislam/uptime-kuma:latest
+        ports:
+        - name: uptime-kuma
+          containerPort: 3001
+        env:
+          - name: TZ
+            value: America/Los_Angeles
+          - name: PUID
+            value: '1000'
+          - name: PGID
+            value: '1000'              
+        resources:
+          limits:
+            cpu: 500m
+            memory: "536870912"
+          requests:
+            cpu: 250m
+            memory: "268435456"
+        volumeMounts:
+          - name: uptime-kuma-pvc
+            mountPath: /app/data
+
+  volumeClaimTemplates:
+  - metadata:
+      name: uptime-kuma-pvc
+      namespace: monitoring
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "do-block-storage"
+      resources:
+        requests:
+          storage: 2Gi
