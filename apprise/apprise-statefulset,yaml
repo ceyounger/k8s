@@ -13,7 +13,7 @@ spec:
   selector:
     matchLabels:
       app: apprise-api
-  serviceName: "apprise"
+  serviceName: "apprise-api"
   replicas: 1
   minReadySeconds: 1
   template:
