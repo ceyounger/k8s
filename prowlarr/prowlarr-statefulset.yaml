@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: prowlarr
+  namespace: media-services
+  labels:
+    app.kubernetes.io/name: prowlarr
+  annotations:
+    keel.sh/policy: major
+    keel.sh/trigger: poll
+    keel.sh/pollSchedule: "@weekly"    
+spec:
+  selector:
+    matchLabels:
+      app: prowlarr
+  serviceName: "prowlarr"
+  replicas: 1
+  minReadySeconds: 1
+  template:
+    metadata:
+      labels:
+        app: prowlarr
+      annotations:	
+        linkerd.io/inject: enabled        
+    spec:
+      terminationGracePeriodSeconds: 10
+      containers:
+      - name: prowlarr
+        image: lscr.io/linuxserver/prowlarr:latest
+        ports:
+        - name: prowlarr
+          containerPort: 9696
+        env:
+          - name: TZ
+            value: America/Los_Angeles
+          - name: PUID
+            value: '1000'
+          - name: PGID
+            value: '1000'              
+        resources:
+          limits:
+            cpu: 500m
+            memory: "536870912"
+          requests:
+            cpu: 250m
+            memory: "268435456"
+        volumeMounts:
+          - mountPath: /config
+            name: prowlarr-pvc
+          - mountPath: /data/nzb
+            name: prowlarr-nfs-nzb
+          - mountPath: /data/torrent
+            name: prowlarr-nfs-torrent
+      volumes:
+      - name: prowlarr-nfs-nzb
+        nfs:
+          server: 192.168.52.8
+          path: /volume1/media/Holding/docker/nzb
+          readOnly: false
+      - name: prowlarr-nfs-torrent
+        nfs:
+          server: 192.168.52.8
+          path: /volume1/media/Holding/docker/torrent
+          readOnly: false
+  volumeClaimTemplates:
+  - metadata:
+      name: prowlarr-pvc
+      namespace: media-services
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      storageClassName: "do-block-storage"
+      resources:
+        requests:
+          storage: 2Gi
