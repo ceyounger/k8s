@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: overseerr
-          image: lscr.io/linuxserver/overseerr:latest
+          image: sctx/overseerr
           imagePullPolicy: Always
           env:
           - name: TZ
