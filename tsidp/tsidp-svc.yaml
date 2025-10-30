@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tsidp
+  namespace: general-services
+spec:
+  selector:
+    app: tsidp
+  ports:
+    - name: tsidp
+      port: 443
+      targetPort: 443
