@@ -27,9 +27,6 @@ spec:
       containers:
       - name: tsidp
         image: ghcr.io/tailscale/tsidp:latest
-        ports:
-        - name: tsidp
-          containerPort: 443
         env:
           - name: TAILSCALE_USE_WIP_CODE
             value: "1"
