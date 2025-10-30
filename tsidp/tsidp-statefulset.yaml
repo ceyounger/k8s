@@ -40,7 +40,10 @@ spec:
           - name: TSIDP_ENABLE_STS
             value: 1
           - name: TS_AUTHKEY
-            value: 
+            valueFrom:
+              configMapKeyRef:
+                name: tsidp-configmap # Name of your ConfigMap
+                key: TS_AUTHKEY       # Key from the ConfigMap to use
         resources:
           limits:
             cpu: 500m
