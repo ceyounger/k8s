@@ -36,6 +36,8 @@ spec:
             value: "idp"
           - name: TSIDP_ENABLE_STS
             value: "1"
+          - name: TSIDP_PORT
+            value: "443"
           - name: TS_AUTHKEY
             valueFrom:
               configMapKeyRef:
