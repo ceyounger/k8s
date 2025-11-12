@@ -31,9 +31,9 @@ spec:
           - name: TZ
             value: America/Los_Angeles
           - name: PUID
-            value: '1000'
+            value: '1024'
           - name: PGID
-            value: '1000'              
+            value: '65540'              
         ports:
           - name: nzbhydra
             containerPort: 5076
