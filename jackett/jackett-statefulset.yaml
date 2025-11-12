@@ -48,20 +48,9 @@ spec:
           - mountPath: /config
             name: jackett-pvc
           - mountPath: /data/nzb
-            name: jackett-nfs-nzb
+            name: nas01-nzb-pvc
           - mountPath: /data/torrent
-            name: jackett-nfs-torrent
-      volumes:
-      - name: jackett-nfs-nzb
-        nfs:
-          server: 192.168.52.8
-          path: /volume1/media/Holding/docker/nzb
-          readOnly: false
-      - name: jackett-nfs-torrent
-        nfs:
-          server: 192.168.52.8
-          path: /volume1/media/Holding/docker/torrent
-          readOnly: false
+            name: nas01-torrent-pvc
   volumeClaimTemplates:
   - metadata:
       name: jackett-pvc
