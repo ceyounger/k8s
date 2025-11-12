@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nas01-nzb-pv
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteMany # Or ReadWriteOnce, ReadOnlyMany depending on your needs
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    path: /volume1/media/Holding/docker/nzb
+    server: 192.168.52.8
