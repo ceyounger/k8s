@@ -47,21 +47,21 @@ spec:
         volumeMounts:
           - mountPath: /config
             name: prowlarr-pvc
-          - mountPath: /data/nzb
-            name: prowlarr-nfs-nzb
-          - mountPath: /data/torrent
-            name: prowlarr-nfs-torrent
-      volumes:
-      - name: prowlarr-nfs-nzb
-        nfs:
-          server: 192.168.52.8
-          path: /volume1/media/Holding/docker/nzb
-          readOnly: false
-      - name: prowlarr-nfs-torrent
-        nfs:
-          server: 192.168.52.8
-          path: /volume1/media/Holding/docker/torrent
-          readOnly: false
+#          - mountPath: /data/nzb
+#            name: prowlarr-nfs-nzb
+#          - mountPath: /data/torrent
+#            name: prowlarr-nfs-torrent
+#      volumes:
+#      - name: prowlarr-nfs-nzb
+#        nfs:
+#          server: 192.168.52.8
+#          path: /volume1/media/Holding/docker/nzb
+#          readOnly: false
+#      - name: prowlarr-nfs-torrent
+#        nfs:
+#          server: 192.168.52.8
+#          path: /volume1/media/Holding/docker/torrent
+#          readOnly: false
   volumeClaimTemplates:
   - metadata:
       name: prowlarr-pvc
