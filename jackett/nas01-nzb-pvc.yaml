@@ -9,3 +9,4 @@
         requests:
           storage: 5Gi # Can request a smaller portion of the PV
       volumename: nas01-nzb-pv
+      storageClassName: nfs-static-class
