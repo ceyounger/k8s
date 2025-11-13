@@ -48,17 +48,9 @@ spec:
           - mountPath: /config
             name: jackett-pvc
           - mountPath: "/data/nzb"
-            name: nas01-nzb
+            name: nas01-nzb-pvc
           - mountPath: "/data/torrent"
-            name: nas01-torrent
-      volumes:
-      - name: nas01-nzb
-        persistentVolumeClaim:
-          claimName: nas01-nzb-pvc
-      - name: nas01-torrent
-        persistentVolumeClaim:
-          claimName: nas01-torrent-pvc
-      - name: jackett-nfs-nzb     
+            name: nas01-torrent-pvc   
   volumeClaimTemplates:
   - metadata:
       name: jackett-pvc
@@ -66,6 +58,26 @@ spec:
     spec:
       accessModes: [ "ReadWriteOnce" ]
       storageClassName: "do-block-storage"
+      resources:
+        requests:
+          storage: 2Gi
+  - metadata:
+      name: nas01-nzb-pvc
+      namespace: media-services
+    spec:
+      accessModes: [ "ReadWriteMany" ]
+      storageClassName: "nfs-static-class"
+      volumeName: nas01-nzb-pv
+      resources:
+        requests:
+          storage: 2Gi
+  - metadata:
+      name: nas01-torrent-pvc
+      namespace: media-services
+    spec:
+      accessModes: [ "ReadWriteMany" ]
+      storageClassName: "nfs-static-class"
+      volumeName: nas01-torrent-pv
       resources:
         requests:
           storage: 2Gi
