@@ -1,10 +1,10 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: overseerr
+  name: seerr
   namespace: media-services
   labels:
-    app.kubernetes.io/name: overseerr
+    app.kubernetes.io/name: seerr
   annotations:
     keel.sh/policy: major
     keel.sh/trigger: poll
@@ -13,19 +13,19 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: overseerr
+      app: seerr
   strategy:
     type: Recreate      
   template:
     metadata:
       labels:
-        app: overseerr
+        app: seerr
       annotations:	
         linkerd.io/inject: enabled        
     spec:
       containers:
-        - name: overseerr
-          image: sctx/overseerr
+        - name: seerr
+          image: ghcr.io/seerr-team/seerr:latest
           imagePullPolicy: Always
           env:
           - name: TZ
@@ -35,7 +35,7 @@ spec:
           - name: PGID
             value: '1000'            
           ports:
-            - name: overseerr
+            - name: seerr
               containerPort: 5055
           resources:
             limits:
