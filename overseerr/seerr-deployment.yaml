@@ -29,11 +29,7 @@ spec:
           imagePullPolicy: Always
           env:
           - name: TZ
-            value: America/Los_Angeles
-          - name: PUID
-            value: '1000'
-          - name: PGID
-            value: '1000'            
+            value: America/Los_Angeles           
           ports:
             - name: seerr
               containerPort: 5055
