@@ -45,7 +45,6 @@ spec:
                 key: TS_AUTHKEY       # Key from the ConfigMap to use
         resources:
           limits:
-            cpu: 500m
             memory: "536870912"
           requests:
             cpu: 250m
