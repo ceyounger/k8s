@@ -5,10 +5,6 @@ metadata:
   namespace: general-services
   labels:
     app.kubernetes.io/name: apprise-api
-  annotations:
-    keel.sh/policy: major
-    keel.sh/trigger: poll
-    keel.sh/pollSchedule: "@weekly"    
 spec:
   selector:
     matchLabels:
@@ -20,8 +16,8 @@ spec:
     metadata:
       labels:
         app: apprise-api
-      annotations:	
-        linkerd.io/inject: enabled        
+      annotations:
+        linkerd.io/inject: enabled
     spec:
       terminationGracePeriodSeconds: 10
       containers:
@@ -36,7 +32,22 @@ spec:
           - name: PUID
             value: '1000'
           - name: PGID
-            value: '1000'              
+            value: '1000'
+        readinessProbe:
+          httpGet:
+            path: /status
+            port: apprise-api
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 3
+        livenessProbe:
+          httpGet:
+            path: /status
+            port: apprise-api
+          initialDelaySeconds: 30
+          periodSeconds: 30
+          timeoutSeconds: 5
+          failureThreshold: 3
         resources:
           limits:
             memory: "536870912"
@@ -46,21 +57,15 @@ spec:
         volumeMounts:
           - name: apprise-pvc
             mountPath: /config
-          - name: apprise-attach-pvc
+          - name: attachments
             mountPath: /attachments
-
+      volumes:
+        - name: attachments
+          emptyDir:
+            sizeLimit: 1Gi
   volumeClaimTemplates:
   - metadata:
       name: apprise-pvc
-      namespace: general-services
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      storageClassName: "do-block-storage"
-      resources:
-        requests:
-          storage: 2Gi
-  - metadata:
-      name: apprise-attach-pvc
       namespace: general-services
     spec:
       accessModes: [ "ReadWriteOnce" ]
