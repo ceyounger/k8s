@@ -1,0 +1,3 @@
+ingress:
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-chain-noauth@kubernetescrd,default-basic-auth@kubernetescrd

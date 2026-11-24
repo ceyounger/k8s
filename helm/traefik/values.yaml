@@ -1,5 +1,5 @@
 deployment:
-  replicas: 1
+  replicas: 2   # CHANGED: was 1
 image:
   tag: v3.7
 ingressRoute:
@@ -17,6 +17,19 @@ metrics:
   prometheus:
     enabled: true
     entryPoint: metrics
+# NEW: never let a node drain take both replicas down
+podDisruptionBudget:
+  enabled: true
+  minAvailable: 1
+# NEW: put the two replicas on different nodes
+topologySpreadConstraints:
+- maxSkew: 1
+  topologyKey: kubernetes.io/hostname
+  whenUnsatisfiable: ScheduleAnyway
+  labelSelector:
+    matchLabels:
+      app.kubernetes.io/name: traefik
+      app.kubernetes.io/instance: traefik-traefik
 ports:
   metrics:
     expose:
@@ -34,7 +47,6 @@ ports:
     expose:
       default: true
     port: 8443
-  # NEW: private entrypoint, served only by the internal load balancer
   internal:
     port: 8001
     exposedPort: 80
@@ -51,7 +63,9 @@ providers:
       enabled: true
 service:
   type: LoadBalancer
-  # NEW: second Service backed by a DigitalOcean internal load balancer
+  # NEW: keep the real client IP on the public load balancer
+  spec:
+    externalTrafficPolicy: Local
   additionalServices:
     internal:
       annotations:

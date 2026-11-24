@@ -1,0 +1,8 @@
+#adminPassword: "#######"
+
+grafana.ini:
+  server:
+    root_url: https://grafana.taius.io
+ingress:
+  annotations:
+    traefik.ingress.kubernetes.io/router.middlewares: default-chain-noauth@kubernetescrd
