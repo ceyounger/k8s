@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
       - name: apprise-api
-        image: lscr.io/linuxserver/apprise-api:latest
+        image: lscr.io/linuxserver/apprise-api:v2.2.0-ls272
         ports:
         - name: apprise-api
           containerPort: 8000
