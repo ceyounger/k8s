@@ -8,7 +8,7 @@ metadata:
 spec:
   ingressClassName: traefik
   rules:
-    - host: apprise.home.arpa
+    - host: apprise.sfo2.internal
       http:
         paths:
           - path: /
