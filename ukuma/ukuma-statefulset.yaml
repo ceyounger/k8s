@@ -4,11 +4,7 @@ metadata:
   name: uptime-kuma
   namespace: monitoring
   labels:
-    app.kubernetes.io/name: uptime-kuma
-  annotations:
-    keel.sh/policy: major
-    keel.sh/trigger: poll
-    keel.sh/pollSchedule: "@weekly"    
+    app.kubernetes.io/name: uptime-kuma  
 spec:
   selector:
     matchLabels:
