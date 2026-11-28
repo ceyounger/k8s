@@ -1,0 +1,29 @@
+# DOKS Traefik (not the docker01 container). Save as argocd/traefik/traefik-app.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: traefik
+  namespace: argocd
+  # No finalizers: deleting this object with kubectl leaves Traefik running.
+spec:
+  project: default
+  sources:
+    - repoURL: https://traefik.github.io/charts
+      chart: traefik
+      targetRevision: 42.2.0   # match what "helm list -n traefik" shows
+      helm:
+        releaseName: traefik   # must match: it feeds the immutable selector
+        valueFiles:
+          - $values/helm/traefik/values.yaml
+    - repoURL: https://github.com/ceyounger/k8s.git
+      targetRevision: HEAD
+      ref: values
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: traefik
+  syncPolicy:
+    # No "automated" block: manual sync only during adoption.
+    syncOptions:
+      - ServerSideApply=true
+      - Prune=false
+      - Delete=false
